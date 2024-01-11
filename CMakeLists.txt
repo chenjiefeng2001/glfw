@@ -65,23 +65,6 @@ if (GLFW_BUILD_DOCS)
     find_package(Doxygen)
 endif()
 
-#--------------------------------------------------------------------
-# Apply Microsoft C runtime library option
-# This is here because it also applies to tests and examples
-#--------------------------------------------------------------------
-if (MSVC)
-    if (MSVC90)
-        # Workaround for VS 2008 not shipping with the DirectX 9 SDK
-        include(CheckIncludeFile)
-        check_include_file(dinput.h DINPUT_H_FOUND)
-        if (NOT DINPUT_H_FOUND)
-            message(FATAL_ERROR "DirectX 9 headers not found; install DirectX 9 SDK")
-        endif()
-        # Workaround for VS 2008 not shipping with stdint.h
-        list(APPEND glfw_INCLUDE_DIRS "${GLFW_SOURCE_DIR}/deps/vs2008")
-    endif()
-endif()
-
 if (MSVC AND NOT USE_MSVC_RUNTIME_LIBRARY_DLL)
     if (CMAKE_VERSION VERSION_LESS 3.15)
         foreach (flag CMAKE_C_FLAGS
